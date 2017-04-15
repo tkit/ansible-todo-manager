@@ -2,24 +2,45 @@
 # tasks file for nodejs
 #
 #yum -y install epel-release
-#- name: install epel
-#
-#yum -y install nodejs
-#- name: install nodejs
-#
-#git clone -b server https://github.com/recruit-tech/todo-manager.git /usr/local/src
-#- name: checkout git repository
-#
-#cd /usr/local/src/todo-manager && npm install
-#- name: npm install
-#
-#cd /usr/local/src/todo-manager && npm install express body-parser --save
-#- name: npm install (extra packages)
-#
-#npm install -g forever
-#- name: npm install (forever)
-#
-#forever start --uid todo -a /usr/local/src/todo-manager/app.js
-#- name: start nodejs server 
-#
+- name: install epel
+  yum:
+    name: epel-release
+    state: installed
 
+#yum -y install nodejs
+- name: install nodejs
+  yum:
+    name: nodejs
+    state: installed
+
+#git clone -b server https://github.com/recruit-tech/todo-manager.git /usr/local/src
+- name: checkout git repository
+  git:
+    repo: https://github.com/recruit-tech/todo-manager.git
+    dest: /usr/local/src/todo-manager
+    version: server
+
+#npm install
+- name: npm install
+  npm:
+    path: /usr/local/src/todo-manager
+    state: present
+
+#npm install express body-parser
+- name: npm install (extra packages)
+  npm:
+    name: body-parser
+    path: /usr/local/src/todo-manager
+    state: present
+
+#npm install -g forever
+- name: npm install (forever)
+  npm:
+    name: forever
+    global: yes
+    state: present
+
+#forever start --uid todo -a /usr/local/src/todo-manager/app.js
+- name: start nodejs server
+  command: forever start --uid todo -a /usr/local/src/todo-manager/app.js
+  become_user: vagrant
