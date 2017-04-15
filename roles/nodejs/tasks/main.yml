@@ -1,0 +1,25 @@
+---
+# tasks file for nodejs
+#
+#yum -y install epel-release
+#- name: install epel
+#
+#yum -y install nodejs
+#- name: install nodejs
+#
+#git clone -b server https://github.com/recruit-tech/todo-manager.git /usr/local/src
+#- name: checkout git repository
+#
+#cd /usr/local/src/todo-manager && npm install
+#- name: npm install
+#
+#cd /usr/local/src/todo-manager && npm install express body-parser --save
+#- name: npm install (extra packages)
+#
+#npm install -g forever
+#- name: npm install (forever)
+#
+#forever start --uid todo -a /usr/local/src/todo-manager/app.js
+#- name: start nodejs server 
+#
+
