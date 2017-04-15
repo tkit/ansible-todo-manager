@@ -10,28 +10,29 @@
 #yum -y install nodejs
 - name: install nodejs
   yum:
-    name: nodejs
+    name: "nodejs-{{ nodejs_ver }}"
     state: installed
 
 #git clone -b server https://github.com/recruit-tech/todo-manager.git /usr/local/src
 - name: checkout git repository
   git:
     repo: https://github.com/recruit-tech/todo-manager.git
-    dest: /usr/local/src/todo-manager
+    dest: "{{ app_dir }}"
     version: server
 
 #npm install
 - name: npm install
   npm:
-    path: /usr/local/src/todo-manager
+    path: "{{ app_dir }}"
     state: present
 
 #npm install express body-parser
 - name: npm install (extra packages)
   npm:
     name: body-parser
-    path: /usr/local/src/todo-manager
+    path: "{{ app_dir }}"
     state: present
+    version: '1.17.1'
 
 #npm install -g forever
 - name: npm install (forever)
@@ -39,8 +40,16 @@
     name: forever
     global: yes
     state: present
+    version: '0.15.3'
+
+- name: check list of nodejs app
+  command: forever list
+  register: forever_list
+  become_user: vagrant
+  changed_when: false
 
 #forever start --uid todo -a /usr/local/src/todo-manager/app.js
 - name: start nodejs server
-  command: forever start --uid todo -a /usr/local/src/todo-manager/app.js
+  command: forever start --uid todo -a {{ app_dir }}/app.js
   become_user: vagrant
+  when: "forever_list.stdout.find('todo') == -1"
