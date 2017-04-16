@@ -19,7 +19,7 @@
 #npm install -g forever
 #- name: npm install (forever)
 #
-#forever start --uid todo -a /usr/local/src/todo-manager/app.js
+#cd /usr/local/src/todo-manager && forever start --uid todo -a ./app.js
 #- name: start nodejs server 
 #
 
