@@ -48,7 +48,7 @@
   become_user: vagrant
   changed_when: false
 
-#forever start --uid todo -a /usr/local/src/todo-manager/app.js
+#cd /usr/local/src/todo-manager && forever start --uid todo -a ./app.js
 - name: start nodejs server
   command: forever start --uid todo -a ./app.js
   args:
