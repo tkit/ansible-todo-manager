@@ -42,5 +42,8 @@
 
 #forever start --uid todo -a /usr/local/src/todo-manager/app.js
 - name: start nodejs server
-  command: forever start --uid todo -a /usr/local/src/todo-manager/app.js
+  command: forever start --uid todo -a ./app.js
+  args:
+    chdir: "{{ app_dir }}"
   become_user: vagrant
+
