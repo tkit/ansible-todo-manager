@@ -44,6 +44,6 @@
 - name: start nodejs server
   command: forever start --uid todo -a ./app.js
   args:
-    chdir: "{{ app_dir }}"
+    chdir: /usr/local/src/todo-manager
   become_user: vagrant
 
